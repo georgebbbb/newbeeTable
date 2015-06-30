@@ -10,11 +10,12 @@ function newbeeTable() {
     link: function(scope, ele) {
       scope.fixedConfigs = [];
       scope.normalConfigs = [];
-      angular.forEach(config, function(value, key) {
+      console.log(scope);
+      angular.forEach(scope.config, function(value, key) {
         if (value.isFixed) {
-          fixedConfigs.push(value);
+          scope.fixedConfigs.push(value);
         } else {
-          normalConfigs.push(value);
+          scope.normalConfigs.push(value);
         }
 
       });

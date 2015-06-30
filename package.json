@@ -1,0 +1,22 @@
+{
+  "name": "newbeeTable",
+  "version": "0.0.1",
+  "description": "just a table ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/georgebbbb/newbeeTable.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/georgebbbb/newbeeTable/issues"
+  },
+  "homepage": "https://github.com/georgebbbb/newbeeTable",
+  "dependencies": {
+    "angular": "^1.4.1"
+  }
+}
