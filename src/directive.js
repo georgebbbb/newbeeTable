@@ -7,6 +7,7 @@ function newbeeTable() {
       data: "=",
       config: "="
     },
+    templateUrl:"src/table.html",
     link: function(scope, ele) {
       scope.fixedConfigs = [];
       scope.normalConfigs = [];
