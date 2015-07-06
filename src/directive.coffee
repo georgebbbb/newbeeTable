@@ -6,10 +6,10 @@ newbeeTable = () ->
   scope:
     data: "="
     config: "="
-    templateUrl:"src/table.html"
-    link: (scope) ->
-      scope.fixedConfigs = (c for c in scope.config when c.isFixed)
-      scope.normalConfigs = (c for c in scope.config when !c.isFixed)
+  templateUrl:"src/table.html"
+  link: (scope) ->
+    scope.fixedConfigs = (c for c in scope.config when c.isFixed)
+    scope.normalConfigs = (c for c in scope.config when !c.isFixed)
 
 
 angular.module('newbeeTable').directive 'newbeeLeftTop', newbeeLeftTop
