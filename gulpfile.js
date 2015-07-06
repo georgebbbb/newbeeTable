@@ -33,3 +33,7 @@ gulp.task('compile_coffee', ['validate_coffee'], function() {
 gulp.task('default',['compile_coffee'], function() {
   // place code for your default task here
 });
+
+gulp.task('watch', function () {
+    gulp.watch(source.js.app, ['compile_coffee']);
+});
