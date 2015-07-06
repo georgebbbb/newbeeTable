@@ -1,0 +1,27 @@
+div.scroll {
+  height: 400px;
+  width: 400px;
+ 
+}
+div.scroll>div[newbee-left-top] {
+  
+  display: inline-block;
+  
+
+}
+div.scroll>div[newbee-left-top]>table.table {
+
+  border-top: 1px solid #ccc;
+  border-left: 1px solid #ccc; 
+}
+div.scroll>div[newbee-left] {
+  
+  display: inline-block;
+width: 100%
+}
+div.scroll>div[newbee-left]>table.table {
+
+  
+  border-left: 1px solid #ccc; 
+  border-bottom: 1px solid #ccc; 
+}

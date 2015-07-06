@@ -1,5 +1,4 @@
 angular.module 'newbeeTable', []
-angular.module('newbeeTable').directive 'newbeeTable', newbeeTable
 
 newbeeTable = () ->
   replace: true
@@ -11,8 +10,8 @@ newbeeTable = () ->
     scope.fixedConfigs = (c for c in scope.config when c.isFixed)
     scope.normalConfigs = (c for c in scope.config when !c.isFixed)
 
+angular.module('newbeeTable').directive 'newbeeTable', newbeeTable
 
-angular.module('newbeeTable').directive 'newbeeLeftTop', newbeeLeftTop
 
 newbeeLeftTop = () ->
   replace:true,
@@ -23,17 +22,18 @@ newbeeLeftTop = () ->
     console.log scope.config
 
 
+angular.module('newbeeTable').directive 'newbeeLeftTop', newbeeLeftTop
 
 
-angular.module('newbeeTable').directive 'newbeeLeft', newbeeLeft
 
 newbeeLeft = () ->
   replace:true
   scope:
     config: "="
+    data: "="
   templateUrl:"src/left-table.html"
   link: (scope) ->
+    console.log scope.data
       
-      
-
+angular.module('newbeeTable').directive 'newbeeLeft', newbeeLeft
 
