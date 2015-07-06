@@ -1,4 +1,4 @@
-var newbeeLeft, newbeeLeftTop, newbeeTable;
+var newbeeLeft, newbeeLeftTop, newbeeMain, newbeeTable, newbeeTableFactory, newbeeTop;
 
 angular.module('newbeeTable', []);
 
@@ -36,6 +36,10 @@ newbeeTable = function() {
         }
         return results;
       })();
+    },
+    controller: function($scope) {
+      this.fixedWidth = [];
+      return this.normalWidth = [];
     }
   };
 };
@@ -48,7 +52,7 @@ newbeeLeftTop = function() {
     scope: {
       config: "="
     },
-    templateUrl: "src/left-top-table.html",
+    templateUrl: "src/top-table.html",
     link: function(scope) {
       return console.log(scope.config);
     }
@@ -57,18 +61,67 @@ newbeeLeftTop = function() {
 
 angular.module('newbeeTable').directive('newbeeLeftTop', newbeeLeftTop);
 
-newbeeLeft = function() {
+newbeeLeft = function($timeout, newbeeTableFactory) {
   return {
     replace: true,
     scope: {
       config: "=",
       data: "="
     },
-    templateUrl: "src/left-table.html",
+    templateUrl: "src/main-table.html",
+    link: function(scope, ele, attr) {
+      return $timeout(function() {
+        var i, len, results, td, tds, tr;
+        tr = ele.find('table>tbody>tr');
+        tds = angular.element(tr.get(scope.data.length != null ? scope.data.length - 1 : void 0));
+        results = [];
+        for (i = 0, len = tds.length; i < len; i++) {
+          td = tds[i];
+          results.push(newbeeTableFactory.fixedWidth.push(td.css('width')));
+        }
+        return results;
+      });
+    }
+  };
+};
+
+angular.module('newbeeTable').directive('newbeeLeft', newbeeLeft);
+
+newbeeTop = function() {
+  return {
+    replace: true,
+    scope: {
+      config: "=",
+      data: "="
+    },
+    templateUrl: "src/top-table.html",
     link: function(scope) {
       return console.log(scope.data);
     }
   };
 };
 
-angular.module('newbeeTable').directive('newbeeLeft', newbeeLeft);
+angular.module('newbeeTable').directive('newbeeTop', newbeeTop);
+
+newbeeMain = function() {
+  return {
+    replace: true,
+    scope: {
+      config: "=",
+      data: "="
+    },
+    templateUrl: "src/main-table.html",
+    link: function(scope) {}
+  };
+};
+
+angular.module('newbeeTable').directive('newbeeMain', newbeeMain);
+
+newbeeTableFactory = function() {
+  return {
+    fixedWidth: [],
+    normalWidth: []
+  };
+};
+
+angular.module('newbeeTable').factory('newbeeTableFactory', newbeeTableFactory);

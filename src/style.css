@@ -1,27 +1,64 @@
+
+body {
+    overflow: hidden;
+}
+
 div.scroll {
-  height: 400px;
-  width: 400px;
+  
+
+white-space:nowrap;
+overflow: hidden;
+ 
+}
+div.scroll table {
+    border-spacing: 0px;
+}
+div.scroll table td,div.scroll table th{
+border-bottom: 1px solid gray;
+border-right: 1px solid gray;
  
 }
 div.scroll>div[newbee-left-top] {
   
   display: inline-block;
+
+}
+div.scroll>div[newbee-top] {
   
+  display: inline-block;
+   white-space:nowrap;
 
 }
 div.scroll>div[newbee-left-top]>table.table {
 
-  border-top: 1px solid #ccc;
-  border-left: 1px solid #ccc; 
+  border-top: 1px solid gray;
+  border-left: 1px solid gray; 
 }
+
+div.scroll>div[newbee-left-top]>table.table>thead {
+
+  border-bottom: 1px solid gray;
+ 
+}
+
 div.scroll>div[newbee-left] {
   
   display: inline-block;
-width: 100%
+
 }
+
+div.scroll>div[newbee-main] {
+  
+  display: inline-block;
+  overflow: auto;
+  width: 100px;
+
+}
+
+
 div.scroll>div[newbee-left]>table.table {
 
   
-  border-left: 1px solid #ccc; 
-  border-bottom: 1px solid #ccc; 
+  border-left: 1px solid gray; 
+  border-bottom: 1px solid gray; 
 }
