@@ -17,6 +17,9 @@
   },
   "homepage": "https://github.com/georgebbbb/newbeeTable",
   "dependencies": {
-    "angular": "^1.4.1"
+    "angular": "^1.4.1",
+    "gulp": "^3.9.0",
+    "gulp-coffee": "^2.3.1",
+    "gulp-coffeelint": "^0.5.0"
   }
 }
