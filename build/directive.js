@@ -1,4 +1,4 @@
-var newbeeLeft, newbeeLeftTop, newbeeMain, newbeeTable, newbeeTableFactory, newbeeTop;
+var generateMaxWidth, newbeeLeft, newbeeLeftTop, newbeeMain, newbeeTable, newbeeTableFactory, newbeeTop;
 
 angular.module('newbeeTable', []);
 
@@ -13,11 +13,11 @@ newbeeTable = function() {
     link: function(scope) {
       var c;
       scope.fixedConfigs = (function() {
-        var i, len, ref, results;
+        var j, len, ref, results;
         ref = scope.config;
         results = [];
-        for (i = 0, len = ref.length; i < len; i++) {
-          c = ref[i];
+        for (j = 0, len = ref.length; j < len; j++) {
+          c = ref[j];
           if (c.isFixed) {
             results.push(c);
           }
@@ -25,11 +25,11 @@ newbeeTable = function() {
         return results;
       })();
       return scope.normalConfigs = (function() {
-        var i, len, ref, results;
+        var j, len, ref, results;
         ref = scope.config;
         results = [];
-        for (i = 0, len = ref.length; i < len; i++) {
-          c = ref[i];
+        for (j = 0, len = ref.length; j < len; j++) {
+          c = ref[j];
           if (!c.isFixed) {
             results.push(c);
           }
@@ -46,15 +46,23 @@ newbeeTable = function() {
 
 angular.module('newbeeTable').directive('newbeeTable', newbeeTable);
 
-newbeeLeftTop = function() {
+newbeeLeftTop = function($timeout) {
   return {
     replace: true,
     scope: {
       config: "="
     },
     templateUrl: "src/top-table.html",
-    link: function(scope) {
-      return console.log(scope.config);
+    link: function(scope, ele) {
+      return $timeout(function() {
+        var i, widths;
+        i = 0;
+        widths = newbeeTableFactory.fixedWidth;
+        if (i != null) {
+          generateMaxWidth(ele, i, widths, 'table>thead>tr', 'th');
+        }
+        return console.log(widths);
+      });
     }
   };
 };
@@ -71,15 +79,15 @@ newbeeLeft = function($timeout, newbeeTableFactory) {
     templateUrl: "src/main-table.html",
     link: function(scope, ele, attr) {
       return $timeout(function() {
-        var i, len, results, td, tds, tr;
-        tr = ele.find('table>tbody>tr');
-        tds = angular.element(tr.get(scope.data.length != null ? scope.data.length - 1 : void 0));
-        results = [];
-        for (i = 0, len = tds.length; i < len; i++) {
-          td = tds[i];
-          results.push(newbeeTableFactory.fixedWidth.push(td.css('width')));
+        var i, widths;
+        if (scope.data.length != null) {
+          i = scope.data.length - 1;
         }
-        return results;
+        widths = newbeeTableFactory.fixedWidth;
+        console.log(widths, 333333);
+        if (i != null) {
+          return generateMaxWidth(ele, i, widths, 'table>tbody>tr', 'td');
+        }
       });
     }
   };
@@ -125,3 +133,17 @@ newbeeTableFactory = function() {
 };
 
 angular.module('newbeeTable').factory('newbeeTableFactory', newbeeTableFactory);
+
+generateMaxWidth = function(ele, i, widths, selectorPre, selectorPost) {
+  var tds, tr;
+  tr = ele.find(selectorPre);
+  tds = $(tr.get(i)).find(selectorPost);
+  console.log(tds, widths);
+  return tds.each(function(i, e) {
+    var width;
+    width = $(e).css('width');
+    if ((widths[i] == null) || (width > widths[i])) {
+      return widths[i] = width;
+    }
+  });
+};

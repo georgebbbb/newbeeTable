@@ -44,6 +44,7 @@ div.scroll>div[newbee-left-top]>table.table>thead {
 div.scroll>div[newbee-left] {
   
   display: inline-block;
+  vertical-align: top;
 
 }
 
@@ -52,6 +53,8 @@ div.scroll>div[newbee-main] {
   display: inline-block;
   overflow: auto;
   width: 100px;
+    vertical-align: top;
+
 
 }
 
