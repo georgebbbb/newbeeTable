@@ -47,29 +47,34 @@ newbeeLeft = ($timeout,newbeeTableFactory) ->
 angular.module('newbeeTable').directive 'newbeeLeft', newbeeLeft
 
 
-newbeeTop = () ->
+newbeeTop = ($timeout,newbeeTableFactory) ->
   replace:true
   scope:
     config: "="
     data: "="
   templateUrl:"src/top-table.html"
-  link: (scope) ->
+  link: (scope,ele) ->
+    $timeout ->
+      newbeeTableFactory.generateMaxNormalWidth ele,0,'table>thead>tr','th'
+
 
 
 angular.module('newbeeTable').directive 'newbeeTop', newbeeTop
 
 
 
-newbeeMain = () ->
+newbeeMain = ($timeout,newbeeTableFactory) ->
   replace:true
   scope:
     config: "="
     data: "="
   templateUrl:"src/main-table.html"
-  link: (scope) ->
+  link: (scope,ele) ->
+    $timeout ->
+      i=scope.data.length-1 if scope.data.length?
+      newbeeTableFactory.generateMaxNormalWidth ele,i,'table>tbody>tr','td' if i
 
-    
-      
+
 angular.module('newbeeTable').directive 'newbeeMain', newbeeMain
 
 
@@ -80,7 +85,9 @@ newbeeTableFactory = () ->
   normalWidth : []
   generateMaxFixedWidth :(ele,i,selectorPre,selectorPost)->
     generateMaxWidth ele,i,this.fixedWidth,selectorPre,selectorPost
-    console.log this.fixedWidth
+  generateMaxNormalWidth :(ele,i,selectorPre,selectorPost) ->
+    generateMaxWidth ele,i,this.normalWidth,selectorPre,selectorPost
+    console.log this.normalWidth
 
 
 angular.module('newbeeTable').factory 'newbeeTableFactory',newbeeTableFactory
@@ -95,14 +102,15 @@ generateMaxWidth =(ele,i,widths,selectorPre,selectorPost)->
       widths[i]=
         width : width
         ele   : e
-    else if width>widths[i].width
+    else if pxCompare width,widths[i].width
       widths[i].width = width
+      pxCompare width,width
       widths[i].ele.css('width',width)
-    else if width<widths[i].width
+    else if !pxCompare width,widths[i].width
       e.css 'width',width
 
 
-
-
+pxCompare =(a,b)->
+  parseInt(a)>parseInt(b)
 
 

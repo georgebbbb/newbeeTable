@@ -1,4 +1,4 @@
-var generateMaxWidth, newbeeLeft, newbeeLeftTop, newbeeMain, newbeeTable, newbeeTableFactory, newbeeTop;
+var generateMaxWidth, newbeeLeft, newbeeLeftTop, newbeeMain, newbeeTable, newbeeTableFactory, newbeeTop, pxCompare;
 
 angular.module('newbeeTable', []);
 
@@ -83,7 +83,7 @@ newbeeLeft = function($timeout, newbeeTableFactory) {
 
 angular.module('newbeeTable').directive('newbeeLeft', newbeeLeft);
 
-newbeeTop = function() {
+newbeeTop = function($timeout, newbeeTableFactory) {
   return {
     replace: true,
     scope: {
@@ -91,13 +91,17 @@ newbeeTop = function() {
       data: "="
     },
     templateUrl: "src/top-table.html",
-    link: function(scope) {}
+    link: function(scope, ele) {
+      return $timeout(function() {
+        return newbeeTableFactory.generateMaxNormalWidth(ele, 0, 'table>thead>tr', 'th');
+      });
+    }
   };
 };
 
 angular.module('newbeeTable').directive('newbeeTop', newbeeTop);
 
-newbeeMain = function() {
+newbeeMain = function($timeout, newbeeTableFactory) {
   return {
     replace: true,
     scope: {
@@ -105,7 +109,17 @@ newbeeMain = function() {
       data: "="
     },
     templateUrl: "src/main-table.html",
-    link: function(scope) {}
+    link: function(scope, ele) {
+      return $timeout(function() {
+        var i;
+        if (scope.data.length != null) {
+          i = scope.data.length - 1;
+        }
+        if (i) {
+          return newbeeTableFactory.generateMaxNormalWidth(ele, i, 'table>tbody>tr', 'td');
+        }
+      });
+    }
   };
 };
 
@@ -116,8 +130,11 @@ newbeeTableFactory = function() {
     fixedWidth: [],
     normalWidth: [],
     generateMaxFixedWidth: function(ele, i, selectorPre, selectorPost) {
-      generateMaxWidth(ele, i, this.fixedWidth, selectorPre, selectorPost);
-      return console.log(this.fixedWidth);
+      return generateMaxWidth(ele, i, this.fixedWidth, selectorPre, selectorPost);
+    },
+    generateMaxNormalWidth: function(ele, i, selectorPre, selectorPost) {
+      generateMaxWidth(ele, i, this.normalWidth, selectorPre, selectorPost);
+      return console.log(this.normalWidth);
     }
   };
 };
@@ -137,11 +154,16 @@ generateMaxWidth = function(ele, i, widths, selectorPre, selectorPost) {
         width: width,
         ele: e
       };
-    } else if (width > widths[i].width) {
+    } else if (pxCompare(width, widths[i].width)) {
       widths[i].width = width;
+      pxCompare(width, width);
       return widths[i].ele.css('width', width);
-    } else if (width < widths[i].width) {
+    } else if (!pxCompare(width, widths[i].width)) {
       return e.css('width', width);
     }
   });
+};
+
+pxCompare = function(a, b) {
+  return parseInt(a) > parseInt(b);
 };
