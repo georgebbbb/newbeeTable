@@ -36,17 +36,13 @@ newbeeTable = function() {
         }
         return results;
       })();
-    },
-    controller: function($scope) {
-      this.fixedWidth = [];
-      return this.normalWidth = [];
     }
   };
 };
 
 angular.module('newbeeTable').directive('newbeeTable', newbeeTable);
 
-newbeeLeftTop = function($timeout) {
+newbeeLeftTop = function($timeout, newbeeTableFactory) {
   return {
     replace: true,
     scope: {
@@ -55,13 +51,7 @@ newbeeLeftTop = function($timeout) {
     templateUrl: "src/top-table.html",
     link: function(scope, ele) {
       return $timeout(function() {
-        var i, widths;
-        i = 0;
-        widths = newbeeTableFactory.fixedWidth;
-        if (i != null) {
-          generateMaxWidth(ele, i, widths, 'table>thead>tr', 'th');
-        }
-        return console.log(widths);
+        return newbeeTableFactory.generateMaxFixedWidth(ele, 0, 'table>thead>tr', 'th');
       });
     }
   };
@@ -79,14 +69,12 @@ newbeeLeft = function($timeout, newbeeTableFactory) {
     templateUrl: "src/main-table.html",
     link: function(scope, ele, attr) {
       return $timeout(function() {
-        var i, widths;
+        var i;
         if (scope.data.length != null) {
           i = scope.data.length - 1;
         }
-        widths = newbeeTableFactory.fixedWidth;
-        console.log(widths, 333333);
         if (i != null) {
-          return generateMaxWidth(ele, i, widths, 'table>tbody>tr', 'td');
+          return newbeeTableFactory.generateMaxFixedWidth(ele, i, 'table>tbody>tr', 'td');
         }
       });
     }
@@ -103,9 +91,7 @@ newbeeTop = function() {
       data: "="
     },
     templateUrl: "src/top-table.html",
-    link: function(scope) {
-      return console.log(scope.data);
-    }
+    link: function(scope) {}
   };
 };
 
@@ -128,7 +114,11 @@ angular.module('newbeeTable').directive('newbeeMain', newbeeMain);
 newbeeTableFactory = function() {
   return {
     fixedWidth: [],
-    normalWidth: []
+    normalWidth: [],
+    generateMaxFixedWidth: function(ele, i, selectorPre, selectorPost) {
+      generateMaxWidth(ele, i, this.fixedWidth, selectorPre, selectorPost);
+      return console.log(this.fixedWidth);
+    }
   };
 };
 
@@ -138,12 +128,20 @@ generateMaxWidth = function(ele, i, widths, selectorPre, selectorPost) {
   var tds, tr;
   tr = ele.find(selectorPre);
   tds = $(tr.get(i)).find(selectorPost);
-  console.log(tds, widths);
   return tds.each(function(i, e) {
     var width;
-    width = $(e).css('width');
-    if ((widths[i] == null) || (width > widths[i])) {
-      return widths[i] = width;
+    e = $(e);
+    width = e.css('width');
+    if (widths[i] == null) {
+      return widths[i] = {
+        width: width,
+        ele: e
+      };
+    } else if (width > widths[i].width) {
+      widths[i].width = width;
+      return widths[i].ele.css('width', width);
+    } else if (width < widths[i].width) {
+      return e.css('width', width);
     }
   });
 };

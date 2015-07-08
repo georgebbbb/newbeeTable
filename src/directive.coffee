@@ -9,24 +9,20 @@ newbeeTable = () ->
   link: (scope) ->
     scope.fixedConfigs = (c for c in scope.config when c.isFixed)
     scope.normalConfigs = (c for c in scope.config when !c.isFixed)
-  controller: ($scope) ->
-    this.fixedWidth = []
-    this.normalWidth = []
+
 
 angular.module('newbeeTable').directive 'newbeeTable', newbeeTable
 
 
-newbeeLeftTop = ($timeout) ->
+newbeeLeftTop = ($timeout,newbeeTableFactory) ->
   replace:true,
   scope :
     config : "="
   templateUrl : "src/top-table.html"
   link : (scope,ele) ->
     $timeout ->
-      i=0
-      widths =newbeeTableFactory.fixedWidth
-      generateMaxWidth ele,i,widths,'table>thead>tr','th' if i?
-      console.log(widths)
+      newbeeTableFactory.generateMaxFixedWidth ele,0,'table>thead>tr','th'
+
 
 
 angular.module('newbeeTable').directive 'newbeeLeftTop', newbeeLeftTop
@@ -42,12 +38,10 @@ newbeeLeft = ($timeout,newbeeTableFactory) ->
   link: (scope,ele,attr) ->
     $timeout ->
       i=scope.data.length-1 if scope.data.length?
-      widths =newbeeTableFactory.fixedWidth
-      console.log widths,333333
-      generateMaxWidth ele,i,widths,'table>tbody>tr','td' if i?
+      newbeeTableFactory.generateMaxFixedWidth ele,i,'table>tbody>tr','td' if i?
 
 
-        
+
 
 
 angular.module('newbeeTable').directive 'newbeeLeft', newbeeLeft
@@ -60,7 +54,7 @@ newbeeTop = () ->
     data: "="
   templateUrl:"src/top-table.html"
   link: (scope) ->
-    console.log scope.data
+
 
 angular.module('newbeeTable').directive 'newbeeTop', newbeeTop
 
@@ -84,14 +78,31 @@ angular.module('newbeeTable').directive 'newbeeMain', newbeeMain
 newbeeTableFactory = () ->
   fixedWidth:[]
   normalWidth : []
+  generateMaxFixedWidth :(ele,i,selectorPre,selectorPost)->
+    generateMaxWidth ele,i,this.fixedWidth,selectorPre,selectorPost
+    console.log this.fixedWidth
+
 
 angular.module('newbeeTable').factory 'newbeeTableFactory',newbeeTableFactory
 
 generateMaxWidth =(ele,i,widths,selectorPre,selectorPost)->
   tr = ele.find selectorPre
   tds = $(tr.get(i)).find selectorPost
-  console.log tds,widths
   tds.each (i,e)->
-    width = $(e).css 'width'
-    widths[i]=width if (!widths[i]?)||(width>widths[i])
-    
+    e=$ e
+    width = e.css 'width'
+    if !widths[i]?
+      widths[i]=
+        width : width
+        ele   : e
+    else if width>widths[i].width
+      widths[i].width = width
+      widths[i].ele.css('width',width)
+    else if width<widths[i].width
+      e.css 'width',width
+
+
+
+
+
+
