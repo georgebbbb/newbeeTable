@@ -14,6 +14,18 @@ newbeeTable = () ->
 angular.module('newbeeTable').directive 'newbeeTable', newbeeTable
 
 
+
+
+newbeeGrid = ($timeout) ->
+  controller: ()->
+  link: (scope) ->
+    $timeout ->
+      console.log(666)
+
+
+
+angular.module('newbeeTable').directive 'newbeeGrid', newbeeGrid
+
 newbeeLeftTop = ($timeout,newbeeTableFactory) ->
   replace:true,
   scope :
@@ -21,7 +33,7 @@ newbeeLeftTop = ($timeout,newbeeTableFactory) ->
   templateUrl : "src/top-table.html"
   link : (scope,ele) ->
     $timeout ->
-      newbeeTableFactory.generateMaxFixedWidth ele,0,'table>thead>tr','th'
+      newbeeTableFactory.generateMaxFixedWidth ele,0,null,'div'
 
 
 
@@ -29,7 +41,7 @@ angular.module('newbeeTable').directive 'newbeeLeftTop', newbeeLeftTop
 
 
 
-newbeeLeft = ($timeout,newbeeTableFactory) ->
+newbeeLeft = ($timeout,newbeeTableFactory,$window) ->
   replace:true
   scope:
     config: "="
@@ -39,6 +51,9 @@ newbeeLeft = ($timeout,newbeeTableFactory) ->
     $timeout ->
       i=scope.data.length-1 if scope.data.length?
       newbeeTableFactory.generateMaxFixedWidth ele,i,'table>tbody>tr','td' if i?
+      ele.css 'height',$window.innerHeight-ele.offset().top
+      newbeeTableFactory.moveLeftEle=(distance)->
+        ele.find('table.table').css('top',distance+'px')
 
 
 
@@ -55,7 +70,10 @@ newbeeTop = ($timeout,newbeeTableFactory) ->
   templateUrl:"src/top-table.html"
   link: (scope,ele) ->
     $timeout ->
-      newbeeTableFactory.generateMaxNormalWidth ele,0,'table>thead>tr','th'
+      newbeeTableFactory.generateMaxNormalWidth ele,0,null,'div'
+      newbeeTableFactory.moveTopEle=(distance)->
+        ele.children().css('left',distance+'px')
+   
 
 
 
@@ -63,7 +81,7 @@ angular.module('newbeeTable').directive 'newbeeTop', newbeeTop
 
 
 
-newbeeMain = ($timeout,newbeeTableFactory) ->
+newbeeMain = ($timeout,newbeeTableFactory,$window) ->
   replace:true
   scope:
     config: "="
@@ -73,8 +91,14 @@ newbeeMain = ($timeout,newbeeTableFactory) ->
     $timeout ->
       i=scope.data.length-1 if scope.data.length?
       newbeeTableFactory.generateMaxNormalWidth ele,i,'table>tbody>tr','td' if i
-
-
+      ele.css 'height',$window.innerHeight-ele.offset().top
+      top=ele.scrollTop()
+      left=ele.scrollLeft()
+      ele.scroll ()->
+        activeTop=ele.scrollTop()
+        activeLeft=ele.scrollLeft()
+        newbeeTableFactory.moveTopEle left-activeLeft unless left is activeLeft
+        newbeeTableFactory.moveLeftEle top-activeTop unless top is activeTop
 angular.module('newbeeTable').directive 'newbeeMain', newbeeMain
 
 
@@ -93,8 +117,10 @@ newbeeTableFactory = () ->
 angular.module('newbeeTable').factory 'newbeeTableFactory',newbeeTableFactory
 
 generateMaxWidth =(ele,i,widths,selectorPre,selectorPost)->
-  tr = ele.find selectorPre
+  tr = if selectorPre? then ele.find selectorPre else ele
   tds = $(tr.get(i)).find selectorPost
+  widths.sum=widths.sum||0
+
   tds.each (i,e)->
     e=$ e
     width = e.css 'width'
@@ -108,6 +134,7 @@ generateMaxWidth =(ele,i,widths,selectorPre,selectorPost)->
       widths[i].ele.css('width',width)
     else if !pxCompare width,widths[i].width
       e.css 'width',width
+    widths.sum=widths.sum+parseInt widths[i].width
 
 
 pxCompare =(a,b)->

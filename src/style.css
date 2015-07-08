@@ -7,8 +7,8 @@ div.scroll {
   
 
 white-space:nowrap;
-overflow: hidden;
- 
+overflow-y: hidden;
+ border: 1px solid gray;
 }
 div.scroll table {
     border-spacing: 0px;
@@ -18,33 +18,61 @@ border-bottom: 1px solid gray;
 border-right: 1px solid gray;
  
 }
-div.scroll>div[newbee-left-top] {
-  
+div.scroll>div[newbee-left-top],div.scroll>div[newbee-top] {
+  vertical-align: top;
   display: inline-block;
+ border-top: 1px solid gray;
 
 }
+div.scroll>div[newbee-left-top]{
+    border-left: 1px solid gray;
+}
+div.scroll>div[newbee-top]{
+    border-right: 1px solid gray;
+}
+
+
+div.scroll>div[newbee-left-top]>div,div.scroll>div[newbee-top]>div {
+  
+  display: inline-block;
+  border-bottom: 1px solid gray;
+  border-right: 1px solid gray;
+  padding: 1px;
+
+}
+
 div.scroll>div[newbee-top] {
   
   display: inline-block;
    white-space:nowrap;
+    width: 300px;
+   overflow: hidden;
 
 }
+
+div.scroll>div[newbee-top]>div {
+    display: inline-block;
+    position: relative;
+
+}
+
+
+
 div.scroll>div[newbee-left-top]>table.table {
 
   border-top: 1px solid gray;
   border-left: 1px solid gray; 
+
+
 }
 
-div.scroll>div[newbee-left-top]>table.table>thead {
 
-  border-bottom: 1px solid gray;
- 
-}
 
 div.scroll>div[newbee-left] {
   
   display: inline-block;
   vertical-align: top;
+  overflow: hidden;
 
 }
 
@@ -52,8 +80,9 @@ div.scroll>div[newbee-main] {
   
   display: inline-block;
   overflow: auto;
-  width: 100px;
-    vertical-align: top;
+  vertical-align: top;
+  width: 300px;
+
 
 
 }
@@ -64,4 +93,5 @@ div.scroll>div[newbee-left]>table.table {
   
   border-left: 1px solid gray; 
   border-bottom: 1px solid gray; 
+  position: relative;
 }

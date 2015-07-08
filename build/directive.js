@@ -1,4 +1,4 @@
-var generateMaxWidth, newbeeLeft, newbeeLeftTop, newbeeMain, newbeeTable, newbeeTableFactory, newbeeTop, pxCompare;
+var generateMaxWidth, newbeeGrid, newbeeLeft, newbeeLeftTop, newbeeMain, newbeeTable, newbeeTableFactory, newbeeTop, pxCompare;
 
 angular.module('newbeeTable', []);
 
@@ -42,6 +42,19 @@ newbeeTable = function() {
 
 angular.module('newbeeTable').directive('newbeeTable', newbeeTable);
 
+newbeeGrid = function($timeout) {
+  return {
+    controller: function() {},
+    link: function(scope) {
+      return $timeout(function() {
+        return console.log(666);
+      });
+    }
+  };
+};
+
+angular.module('newbeeTable').directive('newbeeGrid', newbeeGrid);
+
 newbeeLeftTop = function($timeout, newbeeTableFactory) {
   return {
     replace: true,
@@ -51,7 +64,7 @@ newbeeLeftTop = function($timeout, newbeeTableFactory) {
     templateUrl: "src/top-table.html",
     link: function(scope, ele) {
       return $timeout(function() {
-        return newbeeTableFactory.generateMaxFixedWidth(ele, 0, 'table>thead>tr', 'th');
+        return newbeeTableFactory.generateMaxFixedWidth(ele, 0, null, 'div');
       });
     }
   };
@@ -59,7 +72,7 @@ newbeeLeftTop = function($timeout, newbeeTableFactory) {
 
 angular.module('newbeeTable').directive('newbeeLeftTop', newbeeLeftTop);
 
-newbeeLeft = function($timeout, newbeeTableFactory) {
+newbeeLeft = function($timeout, newbeeTableFactory, $window) {
   return {
     replace: true,
     scope: {
@@ -74,8 +87,12 @@ newbeeLeft = function($timeout, newbeeTableFactory) {
           i = scope.data.length - 1;
         }
         if (i != null) {
-          return newbeeTableFactory.generateMaxFixedWidth(ele, i, 'table>tbody>tr', 'td');
+          newbeeTableFactory.generateMaxFixedWidth(ele, i, 'table>tbody>tr', 'td');
         }
+        ele.css('height', $window.innerHeight - ele.offset().top);
+        return newbeeTableFactory.moveLeftEle = function(distance) {
+          return ele.find('table.table').css('top', distance + 'px');
+        };
       });
     }
   };
@@ -93,7 +110,10 @@ newbeeTop = function($timeout, newbeeTableFactory) {
     templateUrl: "src/top-table.html",
     link: function(scope, ele) {
       return $timeout(function() {
-        return newbeeTableFactory.generateMaxNormalWidth(ele, 0, 'table>thead>tr', 'th');
+        newbeeTableFactory.generateMaxNormalWidth(ele, 0, null, 'div');
+        return newbeeTableFactory.moveTopEle = function(distance) {
+          return ele.children().css('left', distance + 'px');
+        };
       });
     }
   };
@@ -101,7 +121,7 @@ newbeeTop = function($timeout, newbeeTableFactory) {
 
 angular.module('newbeeTable').directive('newbeeTop', newbeeTop);
 
-newbeeMain = function($timeout, newbeeTableFactory) {
+newbeeMain = function($timeout, newbeeTableFactory, $window) {
   return {
     replace: true,
     scope: {
@@ -111,13 +131,27 @@ newbeeMain = function($timeout, newbeeTableFactory) {
     templateUrl: "src/main-table.html",
     link: function(scope, ele) {
       return $timeout(function() {
-        var i;
+        var i, left, top;
         if (scope.data.length != null) {
           i = scope.data.length - 1;
         }
         if (i) {
-          return newbeeTableFactory.generateMaxNormalWidth(ele, i, 'table>tbody>tr', 'td');
+          newbeeTableFactory.generateMaxNormalWidth(ele, i, 'table>tbody>tr', 'td');
         }
+        ele.css('height', $window.innerHeight - ele.offset().top);
+        top = ele.scrollTop();
+        left = ele.scrollLeft();
+        return ele.scroll(function() {
+          var activeLeft, activeTop;
+          activeTop = ele.scrollTop();
+          activeLeft = ele.scrollLeft();
+          if (left !== activeLeft) {
+            newbeeTableFactory.moveTopEle(left - activeLeft);
+          }
+          if (top !== activeTop) {
+            return newbeeTableFactory.moveLeftEle(top - activeTop);
+          }
+        });
       });
     }
   };
@@ -143,24 +177,26 @@ angular.module('newbeeTable').factory('newbeeTableFactory', newbeeTableFactory);
 
 generateMaxWidth = function(ele, i, widths, selectorPre, selectorPost) {
   var tds, tr;
-  tr = ele.find(selectorPre);
+  tr = selectorPre != null ? ele.find(selectorPre) : ele;
   tds = $(tr.get(i)).find(selectorPost);
+  widths.sum = widths.sum || 0;
   return tds.each(function(i, e) {
     var width;
     e = $(e);
     width = e.css('width');
     if (widths[i] == null) {
-      return widths[i] = {
+      widths[i] = {
         width: width,
         ele: e
       };
     } else if (pxCompare(width, widths[i].width)) {
       widths[i].width = width;
       pxCompare(width, width);
-      return widths[i].ele.css('width', width);
+      widths[i].ele.css('width', width);
     } else if (!pxCompare(width, widths[i].width)) {
-      return e.css('width', width);
+      e.css('width', width);
     }
+    return widths.sum = widths.sum + parseInt(widths[i].width);
   });
 };
 
