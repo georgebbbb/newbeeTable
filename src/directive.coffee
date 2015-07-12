@@ -94,6 +94,7 @@ newbeeMain = ($timeout,newbeeTableFactory,$window) ->
       ele.css 'height',$window.innerHeight-ele.offset().top
       top=ele.scrollTop()
       left=ele.scrollLeft()
+      ##当滑动的时候
       ele.scroll ()->
         activeTop=ele.scrollTop()
         activeLeft=ele.scrollLeft()
@@ -111,7 +112,7 @@ newbeeTableFactory = () ->
     generateMaxWidth ele,i,this.fixedWidth,selectorPre,selectorPost
   generateMaxNormalWidth :(ele,i,selectorPre,selectorPost) ->
     generateMaxWidth ele,i,this.normalWidth,selectorPre,selectorPost
-    console.log this.normalWidth
+
 
 
 angular.module('newbeeTable').factory 'newbeeTableFactory',newbeeTableFactory
@@ -119,8 +120,8 @@ angular.module('newbeeTable').factory 'newbeeTableFactory',newbeeTableFactory
 generateMaxWidth =(ele,i,widths,selectorPre,selectorPost)->
   tr = if selectorPre? then ele.find selectorPre else ele
   tds = $(tr.get(i)).find selectorPost
-  widths.sum=widths.sum||0
 
+  ##取出最大的那个宽,并把较小的宽改变为最大的那个
   tds.each (i,e)->
     e=$ e
     width = e.css 'width'
@@ -130,11 +131,9 @@ generateMaxWidth =(ele,i,widths,selectorPre,selectorPost)->
         ele   : e
     else if pxCompare width,widths[i].width
       widths[i].width = width
-      pxCompare width,width
       widths[i].ele.css('width',width)
     else if !pxCompare width,widths[i].width
       e.css 'width',width
-    widths.sum=widths.sum+parseInt widths[i].width
 
 
 pxCompare =(a,b)->
