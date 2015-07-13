@@ -86,6 +86,7 @@ newbeeLeft = function($timeout, newbeeTableFactory, $window) {
         if (scope.data.length != null) {
           i = scope.data.length - 1;
         }
+        
         if (i != null) {
           newbeeTableFactory.generateMaxFixedWidth(ele, i, 'table>tbody>tr', 'td');
         }
