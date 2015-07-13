@@ -167,8 +167,7 @@ newbeeTableFactory = function() {
       return generateMaxWidth(ele, i, this.fixedWidth, selectorPre, selectorPost);
     },
     generateMaxNormalWidth: function(ele, i, selectorPre, selectorPost) {
-      generateMaxWidth(ele, i, this.normalWidth, selectorPre, selectorPost);
-      return console.log(this.normalWidth);
+      return generateMaxWidth(ele, i, this.normalWidth, selectorPre, selectorPost);
     }
   };
 };
@@ -179,24 +178,22 @@ generateMaxWidth = function(ele, i, widths, selectorPre, selectorPost) {
   var tds, tr;
   tr = selectorPre != null ? ele.find(selectorPre) : ele;
   tds = $(tr.get(i)).find(selectorPost);
-  widths.sum = widths.sum || 0;
   return tds.each(function(i, e) {
     var width;
     e = $(e);
     width = e.css('width');
     if (widths[i] == null) {
-      widths[i] = {
+      return widths[i] = {
         width: width,
         ele: e
       };
     } else if (pxCompare(width, widths[i].width)) {
       widths[i].width = width;
       pxCompare(width, width);
-      widths[i].ele.css('width', width);
+      return widths[i].ele.css('width', width);
     } else if (!pxCompare(width, widths[i].width)) {
-      e.css('width', width);
+      return e.css('width', width);
     }
-    return widths.sum = widths.sum + parseInt(widths[i].width);
   });
 };
 

@@ -111,7 +111,7 @@ newbeeTableFactory = () ->
     generateMaxWidth ele,i,this.fixedWidth,selectorPre,selectorPost
   generateMaxNormalWidth :(ele,i,selectorPre,selectorPost) ->
     generateMaxWidth ele,i,this.normalWidth,selectorPre,selectorPost
-    console.log this.normalWidth
+
 
 
 angular.module('newbeeTable').factory 'newbeeTableFactory',newbeeTableFactory
@@ -119,7 +119,7 @@ angular.module('newbeeTable').factory 'newbeeTableFactory',newbeeTableFactory
 generateMaxWidth =(ele,i,widths,selectorPre,selectorPost)->
   tr = if selectorPre? then ele.find selectorPre else ele
   tds = $(tr.get(i)).find selectorPost
-  widths.sum=widths.sum||0
+
 
   tds.each (i,e)->
     e=$ e
@@ -134,7 +134,7 @@ generateMaxWidth =(ele,i,widths,selectorPre,selectorPost)->
       widths[i].ele.css('width',width)
     else if !pxCompare width,widths[i].width
       e.css 'width',width
-    widths.sum=widths.sum+parseInt widths[i].width
+
 
 
 pxCompare =(a,b)->
