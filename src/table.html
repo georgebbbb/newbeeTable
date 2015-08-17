@@ -1,6 +1,33 @@
 <div>
-    <div class="scroll" >
-        <div newbee-left-top config="fixedConfigs"></div><div newbee-top config="normalConfigs"></div><br>
-        <div newbee-left config="fixedConfigs" data="data"></div><div newbee-main config="normalConfigs" data="data"></div>
+
+  <div class="top-left">
+      <div ng-repeat="con in fixedConfigs" class="fix-col-{{$index}}">{{con.label}}</div>
+
+  </div>
+  <div class="top">
+      <div ng-repeat="con in normalConfigs" class="nor-col-{{$index}}">{{con.label}}</div>
+
+  </div>
+
+  <div class="left">
+    <div  ng-repeat="row in data">
+      <div ng-repeat="con in fixedConfigs" class="fix-col-{{$index}}">
+        {{row[con.key]}}
+      </div>
     </div>
+
+
+
+  </div>
+  <div class="main">
+    <div class="panel">
+
+
+    <div  ng-repeat="row in data">
+      <div ng-repeat="con in normalConfigs" class="nor-col-{{$index}}">
+        {{row[con.key]}}
+      </div>
+    </div>
+      </div>
+  </div>
 </div>

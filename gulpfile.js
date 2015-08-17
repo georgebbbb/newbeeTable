@@ -25,7 +25,7 @@ gulp.task('validate_coffee', function () {
 
 gulp.task('compile_coffee', ['validate_coffee'], function() {
   gulp.src(source.js.app)
-      
+
     .pipe(coffee({bare: true}).on('error', console.log))
     .pipe(gulp.dest(build));
 });
@@ -36,5 +36,3 @@ gulp.task('watch', function () {
 gulp.task('default',['compile_coffee','watch'], function() {
   // place code for your default task here
 });
-
-
