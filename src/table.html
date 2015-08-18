@@ -5,16 +5,23 @@
 
   </div>
   <div class="top">
+    <div class="panel">
       <div ng-repeat="con in normalConfigs" class="nor-col-{{$index}}">{{con.label}}</div>
+    </div>
+
 
   </div>
 
   <div class="left">
-    <div  ng-repeat="row in data">
-      <div ng-repeat="con in fixedConfigs" class="fix-col-{{$index}}">
-        {{row[con.key]}}
+    <div class="panel">
+      <div  ng-repeat="row in data">
+        <div ng-repeat="con in fixedConfigs" class="fix-col-{{$index}}">
+          {{row[con.key]}}
+        </div>
       </div>
+
     </div>
+
 
 
 

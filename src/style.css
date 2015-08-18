@@ -31,21 +31,33 @@ div[newbee-table]>div.top-left>div {
 }
 div[newbee-table]>div.top {
   overflow: hidden;
-  white-space:nowrap;
 
 }
-div[newbee-table]>div.top>div {
+
+
+div[newbee-table]>div.top>div.panel {
+  white-space:nowrap;
+  position: relative;
+
+}
+
+div[newbee-table]>div.top>div.panel>div {
   display: inline-block;
   border-left: 1px solid #ccc;
 }
-div[newbee-table]>div.left>div {
+div[newbee-table]>div.left>div.panel>div {
 
   border-top: 1px solid #ccc;
 }
 
-div[newbee-table]>div.main>div.panel{
-overflow: scroll;
+div[newbee-table]>div.main {
+  overflow: scroll;
+  height: 300px;
+}
 
+div[newbee-table]>div.main>div.panel{
+
+  width: auto;
 }
 
 div[newbee-table]>div.main>div.panel>div {
@@ -59,8 +71,18 @@ div[newbee-table]>div.main>div.panel>div>div {
   border-left: 1px solid #ccc;
 }
 
+div[newbee-table]>div.left {
+  height: 300px;
+  overflow: hidden;
 
-div[newbee-table]>div.left>div>div{
+
+}
+div[newbee-table]>div.left>div.panel {
+  position: relative;
+
+}
+
+div[newbee-table]>div.left>div.panel>div>div{
   display: inline-block;
   border-left: 1px solid #ccc;
 }

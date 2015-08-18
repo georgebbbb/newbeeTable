@@ -36,9 +36,8 @@ newbeeTable = function($window, $timeout) {
         }
         return results;
       })();
-      console.log($window);
       return $timeout(function() {
-        var e, fix, i, j, k, len, len1, nor, ref, ref1, results;
+        var e, fix, i, j, k, leftPanel, len, len1, mainPanel, nor, ref, ref1, sl, st, topPanel;
         ref = scope.fixedConfigs;
         for (i = j = 0, len = ref.length; j < len; i = ++j) {
           fix = ref[i];
@@ -46,13 +45,29 @@ newbeeTable = function($window, $timeout) {
           e.width(e.maxWidth());
         }
         ref1 = scope.normalConfigs;
-        results = [];
         for (i = k = 0, len1 = ref1.length; k < len1; i = ++k) {
           nor = ref1[i];
           e = ele.find('.nor-col-' + i);
-          results.push(e.width(e.maxWidth()));
+          e.width(e.maxWidth());
         }
-        return results;
+        mainPanel = ele.find('div.main');
+        topPanel = ele.find('div.top>div.panel');
+        leftPanel = ele.find('div.left>div.panel');
+        sl = 0;
+        st = 0;
+        return mainPanel.scroll(function() {
+          var scrollLeft, scrollTop;
+          scrollLeft = mainPanel.scrollLeft();
+          scrollTop = mainPanel.scrollTop();
+          if (sl !== scrollLeft) {
+            topPanel.css('left', -scrollLeft);
+            sl = scrollLeft;
+          }
+          if (st !== scrollTop) {
+            leftPanel.css('top', -scrollTop);
+            return st = scrollTop;
+          }
+        });
       });
     }
   };
