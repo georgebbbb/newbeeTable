@@ -1,7 +1,17 @@
 var table = angular.module('table', ['newbeeTable']);
-table.controller('table', ['$scope', function($scope) {
+table.controller('table', ['$scope','$timeout', function($scope,$timeout) {
   $scope.data = [];
   $scope.config = [];
+
+  $timeout(function(){
+    $scope.config.shift()
+
+
+  },4000)
+
+
+
+
   var labels = ['a', 'b', 'q', 'w', 'e', 't', 'y', 'r', 'i', 'h'];
   for (var i = 0; i < 20; i++) {
     var o = {};
@@ -14,7 +24,8 @@ table.controller('table', ['$scope', function($scope) {
     $scope.config.push({
       key: labels[j],
       label: labels[j],
-      isFixed: j < 3
+      isFixed: j < 3,
+      width:200
     });
   }
 

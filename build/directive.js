@@ -1,4 +1,4 @@
-var newbeeTable;
+var newbeeTable, ngWidth;
 
 angular.module('newbeeTable', []);
 
@@ -47,6 +47,9 @@ newbeeTable = function($window, $timeout) {
             ref = scope.fixedConfigs;
             for (i = j = 0, len = ref.length; j < len; i = ++j) {
               fix = ref[i];
+              if (!(fix.width == null)) {
+                continue;
+              }
               e = ele.find('.fix-col-' + i);
               e.width(e.maxWidth());
             }
@@ -54,17 +57,20 @@ newbeeTable = function($window, $timeout) {
             results = [];
             for (i = k = 0, len1 = ref1.length; k < len1; i = ++k) {
               nor = ref1[i];
+              if (!(nor.width == null)) {
+                continue;
+              }
               e = ele.find('.nor-col-' + i);
               results.push(e.width(e.maxWidth()));
             }
             return results;
           });
         };
-        scope.$watch('config', function(config) {
+        scope.$watchCollection('config', function(config) {
           if (config) {
             return init();
           }
-        }, true);
+        });
         mainPanel = ele.find('div.main');
         topPanel = ele.find('div.top>div.panel');
         leftPanel = ele.find('div.left>div.panel');
@@ -87,6 +93,22 @@ newbeeTable = function($window, $timeout) {
     }
   };
 };
+
+ngWidth = function() {
+  return {
+    replace: true,
+    scope: true,
+    controller: function($scope, $element, $attrs, $parse) {
+      var width;
+      width = $parse($attrs.ngWidth)($scope);
+      if (width != null) {
+        return $element.width(width);
+      }
+    }
+  };
+};
+
+angular.module('newbeeTable').directive('ngWidth', ngWidth);
 
 angular.module('newbeeTable').directive('newbeeTable', newbeeTable);
 

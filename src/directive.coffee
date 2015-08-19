@@ -17,18 +17,17 @@ newbeeTable = ($window,$timeout) ->
         scope.fixedConfigs = (c for c in scope.config when c.isFixed)
         scope.normalConfigs = (c for c in scope.config when !c.isFixed)
         $timeout ->
-          for fix,i in scope.fixedConfigs
+          for fix,i in scope.fixedConfigs when !fix.width?
             e=ele.find('.fix-col-'+i)
             e.width(e.maxWidth())
-          for nor,i in scope.normalConfigs
+          for nor,i in scope.normalConfigs when !nor.width?
             e=ele.find('.nor-col-'+i)
             e.width(e.maxWidth())
 
 
-      scope.$watch('config',(config)->
-
+      scope.$watchCollection 'config',(config)->
         init() if config
-      true)
+
 
       mainPanel = ele.find('div.main')
       topPanel = ele.find('div.top>div.panel')
@@ -48,6 +47,16 @@ newbeeTable = ($window,$timeout) ->
 
 
 
+
+ngWidth=()->
+  replace:true
+  scope:true
+  controller:($scope,$element,$attrs,$parse)->
+    width=$parse($attrs.ngWidth)($scope)
+    $element.width(width) if width?
+
+
+angular.module('newbeeTable').directive 'ngWidth', ngWidth
 angular.module('newbeeTable').directive 'newbeeTable', newbeeTable
 
 
