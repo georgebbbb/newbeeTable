@@ -16,10 +16,10 @@
     <div class="panel">
       <div  ng-repeat="row in data track by $index">
         <div ng-repeat="con in fixedConfigs track by con.key" ng-width="con.width" class="fix-col-{{::$index}}">
-          <div ng-if="con.html" ng-include="con.html">
+          <div ng-show="con.html" ng-include="con.html">
 
           </div>
-          <div ng-if="!con.html" ng-bind="row[con.key]">
+          <div ng-show="!con.html" ng-bind="row[con.key]">
 
           </div>
 
@@ -34,10 +34,10 @@
     <div class="panel">
     <div  ng-repeat="row in data track by $index">
       <div ng-repeat="con in normalConfigs track by con.key" ng-width="con.width" class="nor-col-{{::$index}}">
-        <div ng-if="con.html" ng-include="con.html">
+        <div ng-show="con.html" ng-include="con.html">
 
         </div>
-        <div ng-if="!con.html" ng-bind="row[con.key]">
+        <div ng-show="!con.html" ng-bind="row[con.key]">
 
         </div>
       </div>

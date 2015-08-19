@@ -72,6 +72,8 @@ div[newbee-table]>div.main>div.panel>div {
 div[newbee-table]>div.main>div.panel>div>div {
   display: inline-block;
   border-left: 1px solid #ccc;
+  height: 18px;
+  vertical-align: top;
 }
 
 div[newbee-table]>div.left {
