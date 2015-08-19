@@ -29,10 +29,16 @@ gulp.task('compile_coffee', ['validate_coffee'], function() {
     .pipe(coffee({bare: true}).on('error', console.log))
     .pipe(gulp.dest(build));
 });
-gulp.task('watch', function () {
-    gulp.watch(source.js.app, ['compile_coffee']);
+
+gulp.task('css', function() {
+  gulp.src("src/style.css")
+    .pipe(gulp.dest(build));
 });
 
-gulp.task('default',['compile_coffee','watch'], function() {
+gulp.task('watch', function () {
+    gulp.watch(source.js.app, ['compile_coffee','css']);
+});
+
+gulp.task('default',['compile_coffee','css','watch'], function() {
   // place code for your default task here
 });

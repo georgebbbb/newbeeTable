@@ -7,7 +7,8 @@ newbeeTable = ($window,$timeout) ->
   scope:
     data: "="
     config: "="
-  templateUrl:"src/table.html"
+  templateUrl: "src/table.html",
+
   link: (scope,ele) ->
     scope.fixedConfigs = (c for c in scope.config when c.isFixed)
     scope.normalConfigs = (c for c in scope.config when !c.isFixed)
@@ -33,12 +34,6 @@ newbeeTable = ($window,$timeout) ->
         unless st is scrollTop
           leftPanel.css 'top',-scrollTop
           st=scrollTop
-
-
-
-
-
-
 
 
 angular.module('newbeeTable').directive 'newbeeTable', newbeeTable
