@@ -1,0 +1,88 @@
+
+body {
+    overflow: hidden;
+}
+div[newbee-table]{
+
+  height: 500px;
+  width: 100%;
+}
+div[newbee-table]>div.top-left,div[newbee-table]>div.top,div[newbee-table]>div.left,div[newbee-table]>div.main {
+
+  border: 1px solid #ccc;
+
+
+}
+div[newbee-table]>div.top-left,div[newbee-table]>div.left{
+
+  float: left;
+}
+
+div[newbee-table]>div.top,div[newbee-table]>div.main{
+
+
+  overflow: hidden;
+
+}
+
+div[newbee-table]>div.top-left>div {
+  display: inline-block;
+  border-left: 1px solid #ccc;
+}
+div[newbee-table]>div.top {
+  overflow: hidden;
+
+}
+
+
+div[newbee-table]>div.top>div.panel {
+  white-space:nowrap;
+  position: relative;
+
+}
+
+div[newbee-table]>div.top>div.panel>div {
+  display: inline-block;
+  border-left: 1px solid #ccc;
+}
+div[newbee-table]>div.left>div.panel>div {
+
+  border-top: 1px solid #ccc;
+}
+
+div[newbee-table]>div.main {
+  overflow: scroll;
+  height: 300px;
+}
+
+div[newbee-table]>div.main>div.panel{
+
+  width: auto;
+}
+
+div[newbee-table]>div.main>div.panel>div {
+
+  border-top: 1px solid #ccc;
+
+  white-space:nowrap;
+}
+div[newbee-table]>div.main>div.panel>div>div {
+  display: inline-block;
+  border-left: 1px solid #ccc;
+}
+
+div[newbee-table]>div.left {
+  height: 300px;
+  overflow: hidden;
+
+
+}
+div[newbee-table]>div.left>div.panel {
+  position: relative;
+
+}
+
+div[newbee-table]>div.left>div.panel>div>div{
+  display: inline-block;
+  border-left: 1px solid #ccc;
+}
