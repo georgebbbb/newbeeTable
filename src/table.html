@@ -1,12 +1,12 @@
 <div>
 
   <div class="top-left">
-      <div ng-repeat="con in fixedConfigs" class="fix-col-{{::$index}}">{{con.label}}</div>
+      <div ng-repeat="con in fixedConfigs track by con.key" class="fix-col-{{::$index}}">{{con.label}}</div>
 
   </div>
   <div class="top">
     <div class="panel">
-      <div ng-repeat="con in normalConfigs" class="nor-col-{{::$index}}">{{con.label}}</div>
+      <div ng-repeat="con in normalConfigs track by con.key" class="nor-col-{{::$index}}">{{con.label}}</div>
     </div>
 
 
@@ -15,7 +15,7 @@
   <div class="left">
     <div class="panel">
       <div  ng-repeat="row in data">
-        <div ng-repeat="con in fixedConfigs" class="fix-col-{{::$index}}">
+        <div ng-repeat="con in fixedConfigs track by con.key" class="fix-col-{{::$index}}">
           {{row[con.key]}}
         </div>
       </div>
@@ -26,7 +26,7 @@
   <div class="main">
     <div class="panel">
     <div  ng-repeat="row in data">
-      <div ng-repeat="con in normalConfigs" class="nor-col-{{::$index}}">
+      <div ng-repeat="con in normalConfigs track by con.key" class="nor-col-{{::$index}}">
         {{row[con.key]}}
       </div>
     </div>
