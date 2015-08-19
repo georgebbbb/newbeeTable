@@ -23,7 +23,7 @@ gulp.task('template', function () {
   gulp.src("./src/*.html")
       .pipe(ngHtml2Js({
           moduleName: "newbeeTable",
-                  prefix: "src"
+                  prefix: "src/"
       }))
       .pipe(gulp.dest(build));
 });
