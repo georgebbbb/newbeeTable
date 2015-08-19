@@ -1,5 +1,5 @@
 var table = angular.module('table', ['newbeeTable']);
-table.controller('table', ['$scope','$timeout', function($scope,$timeout) {
+table.controller('table', ['$scope','$timeout','$sce', function($scope,$timeout,$sce) {
   $scope.data = [];
   $scope.config = [];
 
@@ -24,8 +24,9 @@ table.controller('table', ['$scope','$timeout', function($scope,$timeout) {
     $scope.config.push({
       key: labels[j],
       label: labels[j],
-      isFixed: j < 3,
-      width:200
+      isFixed: j < 4,
+      width:200,
+      html:"src/test.html"
     });
   }
 

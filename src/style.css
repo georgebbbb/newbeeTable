@@ -58,6 +58,7 @@ div[newbee-table]>div.main {
 div[newbee-table]>div.main>div.panel{
 
   width: auto;
+  display: inline-block;
 }
 
 div[newbee-table]>div.main>div.panel>div {
@@ -65,6 +66,8 @@ div[newbee-table]>div.main>div.panel>div {
   border-top: 1px solid #ccc;
 
   white-space:nowrap;
+  width: auto;
+  display: inline-block;
 }
 div[newbee-table]>div.main>div.panel>div>div {
   display: inline-block;

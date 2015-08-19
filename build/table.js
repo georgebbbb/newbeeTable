@@ -22,9 +22,16 @@ module.run(['$templateCache', function($templateCache) {
     '\n' +
     '  <div class="left">\n' +
     '    <div class="panel">\n' +
-    '      <div  ng-repeat="row in data">\n' +
+    '      <div  ng-repeat="row in data track by $index">\n' +
     '        <div ng-repeat="con in fixedConfigs track by con.key" ng-width="con.width" class="fix-col-{{::$index}}">\n' +
-    '          {{row[con.key]}}\n' +
+    '          <div ng-if="con.html" ng-include="con.html">\n' +
+    '\n' +
+    '          </div>\n' +
+    '          <div ng-if="!con.html" ng-bind="row[con.key]">\n' +
+    '\n' +
+    '          </div>\n' +
+    '\n' +
+    '\n' +
     '        </div>\n' +
     '      </div>\n' +
     '    </div>\n' +
@@ -33,9 +40,14 @@ module.run(['$templateCache', function($templateCache) {
     '  </div>\n' +
     '  <div class="main">\n' +
     '    <div class="panel">\n' +
-    '    <div  ng-repeat="row in data">\n' +
+    '    <div  ng-repeat="row in data track by $index">\n' +
     '      <div ng-repeat="con in normalConfigs track by con.key" ng-width="con.width" class="nor-col-{{::$index}}">\n' +
-    '        {{row[con.key]}}\n' +
+    '        <div ng-if="con.html" ng-include="con.html">\n' +
+    '\n' +
+    '        </div>\n' +
+    '        <div ng-if="!con.html" ng-bind="row[con.key]">\n' +
+    '\n' +
+    '        </div>\n' +
     '      </div>\n' +
     '    </div>\n' +
     '      </div>\n' +

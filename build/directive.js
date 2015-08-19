@@ -1,4 +1,4 @@
-var newbeeTable, ngWidth;
+var newbeeTable, ngFuck, ngWidth;
 
 angular.module('newbeeTable', []);
 
@@ -104,6 +104,16 @@ ngWidth = function() {
       if (width != null) {
         return $element.width(width);
       }
+    }
+  };
+};
+
+ngFuck = function() {
+  return {
+    replace: true,
+    scope: true,
+    compile: function() {
+      return console.log(555);
     }
   };
 };

@@ -54,7 +54,11 @@ ngWidth=()->
   controller:($scope,$element,$attrs,$parse)->
     width=$parse($attrs.ngWidth)($scope)
     $element.width(width) if width?
-
+ngFuck=()->
+  replace:true
+  scope:true
+  compile:()->
+    console.log 555
 
 angular.module('newbeeTable').directive 'ngWidth', ngWidth
 angular.module('newbeeTable').directive 'newbeeTable', newbeeTable
