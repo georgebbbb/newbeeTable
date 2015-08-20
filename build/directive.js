@@ -24,7 +24,7 @@ newbeeTable = function($window, $timeout) {
             results = [];
             for (j = 0, len = ref.length; j < len; j++) {
               c = ref[j];
-              if (c.isFixed) {
+              if (c.isFixed && c.show) {
                 results.push(c);
               }
             }
@@ -36,7 +36,7 @@ newbeeTable = function($window, $timeout) {
             results = [];
             for (j = 0, len = ref.length; j < len; j++) {
               c = ref[j];
-              if (!c.isFixed) {
+              if (!c.isFixed && c.show) {
                 results.push(c);
               }
             }

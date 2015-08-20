@@ -90,4 +90,6 @@ div[newbee-table]>div.left>div.panel {
 div[newbee-table]>div.left>div.panel>div>div{
   display: inline-block;
   border-left: 1px solid #ccc;
+  height: 18px;
+  vertical-align: top;
 }

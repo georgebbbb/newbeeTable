@@ -26,7 +26,8 @@ table.controller('table', ['$scope','$timeout','$sce', function($scope,$timeout,
       label: labels[j],
       isFixed: j < 4,
       width:200,
-      html:"src/test.html"
+      html:"src/test.html",
+      show:j%2 is 0
     });
   }
 

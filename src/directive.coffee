@@ -14,8 +14,8 @@ newbeeTable = ($window,$timeout) ->
 
     (scope,ele) ->
       init=->
-        scope.fixedConfigs = (c for c in scope.config when c.isFixed)
-        scope.normalConfigs = (c for c in scope.config when !c.isFixed)
+        scope.fixedConfigs = (c for c in scope.config when c.isFixed and c.show)
+        scope.normalConfigs=(c for c in scope.config when !c.isFixed and c.show)
         $timeout ->
           for fix,i in scope.fixedConfigs when !fix.width?
             e=ele.find('.fix-col-'+i)
