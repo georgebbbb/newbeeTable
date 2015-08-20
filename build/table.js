@@ -25,15 +25,11 @@ module.run(['$templateCache', function($templateCache) {
     '      <div  ng-repeat="row in data track by $index">\n' +
     '        <div ng-repeat="con in fixedConfigs track by con.key" ng-width="con.width" class="fix-col-{{::$index}}">\n' +
     '          <div ng-show="con.html" ng-include="con.html">\n' +
-    '\n' +
     '          </div>\n' +
     '          <div ng-show="!con.html" ng-bind="row[con.key]">\n' +
-    '\n' +
     '          </div>\n' +
-    '\n' +
-    '\n' +
     '        </div>\n' +
-    '      </div>\n' +
+    '      </div><br>\n' +
     '    </div>\n' +
     '\n' +
     '\n' +
@@ -43,13 +39,11 @@ module.run(['$templateCache', function($templateCache) {
     '    <div  ng-repeat="row in data track by $index">\n' +
     '      <div ng-repeat="con in normalConfigs track by con.key" ng-width="con.width" class="nor-col-{{::$index}}">\n' +
     '        <div ng-show="con.html" ng-include="con.html">\n' +
-    '\n' +
     '        </div>\n' +
     '        <div ng-show="!con.html" ng-bind="row[con.key]">\n' +
-    '\n' +
     '        </div>\n' +
     '      </div>\n' +
-    '    </div>\n' +
+    '    </div><br>\n' +
     '      </div>\n' +
     '  </div>\n' +
     '</div>\n' +
